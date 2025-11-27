@@ -19,6 +19,11 @@ class DatabaseSeeder extends Seeder
             ProfileSeeder::class,
             TagSeeder::class,
             PostSeeder::class,
+            ChatSeeder::class,
+            MessageSeeder::class,
+            ImageSeeder::class,
+            CommentSeeder::class,
+            ProfilePostLikeSeeder::class,
         ]);
     }
 }

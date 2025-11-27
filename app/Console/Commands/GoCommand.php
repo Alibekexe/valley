@@ -28,6 +28,6 @@ class GoCommand extends Command
     public function handle()
     {
         $post = Post::first();
-        dd($post->tags);
+        $post->tags()->attach(1);
     }
 }
