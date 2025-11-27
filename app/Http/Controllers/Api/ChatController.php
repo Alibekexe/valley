@@ -1,9 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
+use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\Chat\StoreRequest;
 use App\Http\Requests\Api\Chat\UpdateRequest;
+use App\Http\Resources\Chat\ChatResource;
 use App\Models\Chat;
 use Illuminate\Http\Request;
 
@@ -11,7 +13,7 @@ class ChatController extends Controller
 {
     public function index()
     {
-        return Chat::all();
+        return ChatResource::collection(Chat::all())->resolve();
     }
 
     public function create()
@@ -27,7 +29,7 @@ class ChatController extends Controller
 
     public function show(Chat $chat)
     {
-        return $chat;
+        return ChatResource::make($chat)->resolve();
     }
 
     public function edit(Chat $chat)

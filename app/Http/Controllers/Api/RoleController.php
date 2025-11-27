@@ -1,24 +1,43 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
 use App\Models\Role;
-use Illuminate\Http\Request;
+use App\Http\Requests\Api\Role\StoreRequest;
+use App\Http\Requests\Api\Role\UpdateRequest;
+use App\Http\Resources\Role\RoleResource;
+use App\Http\Controllers\Controller;
 
 class RoleController extends Controller
 {
-    public function index() { return Role::all(); }
+    public function index()
+    {
+        return RoleResource::collection(Role::all())->resolve();
+    }
+
     public function create() { return response()->json(['message' => 'show create role form']); }
-    public function store(Request $request) {
-        $data = $request->validate(['title' => 'required|string|max:255']);
-        return Role::create($data);
+    public function store(StoreRequest $request)
+    {
+        $data = $request->validated();
+        $role = Role::create($data);
+        return RoleResource::make($role)->resolve();
     }
-    public function show(Role $role) { return $role; }
-    public function edit(Role $role) { return response()->json($role); }
-    public function update(Request $request, Role $role) {
-        $data = $request->validate(['title' => 'sometimes|required|string|max:255']);
+
+    public function show(Role $role)
+    {
+        return RoleResource::make($role)->resolve();
+    }
+
+    public function update(UpdateRequest $request, Role $role)
+    {
+        $data = $request->validated();
         $role->update($data);
-        return $role;
+        return RoleResource::make($role)->resolve();
     }
-    public function destroy(Role $role) { $role->delete(); return response()->json(['message' => 'deleted']); }
+
+    public function destroy(Role $role)
+    {
+        $role->delete();
+        return response()->json(['message' => 'Role deleted successfully']);
+    }
 }

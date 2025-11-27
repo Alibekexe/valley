@@ -23,4 +23,15 @@ class Profile extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function likes()
+    {
+        return $this->hasMany(ProfilePostLike::class);
+    }
+
+    public function likedPosts()
+    {
+        return $this->belongsToMany(Post::class, 'profile_post_likes')
+            ->withTimestamps();
+    }
 }

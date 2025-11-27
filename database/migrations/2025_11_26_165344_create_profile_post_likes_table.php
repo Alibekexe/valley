@@ -11,15 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('comments', function (Blueprint $table) {
+        Schema::create('profile_post_likes', function (Blueprint $table) {
             $table->id();
-            $table->text('content');
-            $table->integer('like')->default(0);
-
             $table->foreignId('post_id')->index()->constrained('posts');
             $table->foreignId('profile_id')->index()->constrained('profiles');
-
-            $table->foreignId('parent_id')->nullable()->constrained('comments')->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -29,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('comments');
+        Schema::dropIfExists('profile_post_likes');
     }
 };

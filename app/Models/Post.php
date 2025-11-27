@@ -44,4 +44,15 @@ class Post extends Model
     {
         return $this->hasMany(Comment::class);
     }
+
+    public function likes()
+    {
+        return $this->hasMany(ProfilePostLike::class);
+    }
+
+    public function likedByProfiles()
+    {
+        return $this->belongsToMany(Profile::class, 'profile_post_likes')
+            ->withTimestamps();
+    }
 }
